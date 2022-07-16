@@ -10,7 +10,8 @@ export default class Home extends React.Component {
             layoutY: 0,
             layout: '',
             board: [],
-            rowPrice: []
+            rowPrice: [],
+            onlineButton:false
         };
         this.auxilary = {
             X: '',
@@ -61,10 +62,15 @@ export default class Home extends React.Component {
         console.log(board);
 
         this.setState({ board: board })
+        this.auxilary.board= board;
+        this.setState({onlineButton:true})
     }
 
     setRowPrice = (rowName) => {
         let price = prompt('Enter the price of the row?');
+        if(price===null){
+            return;
+        }
         console.log(price);
         // let alreadyExists = false;
         // let index=0;
@@ -130,6 +136,11 @@ export default class Home extends React.Component {
 
     }
 
+    makeOnline(board,pricing){
+        console.log(board);
+        console.log(pricing);
+    }
+
     render() {
 
 
@@ -172,6 +183,13 @@ export default class Home extends React.Component {
                         </div>
                     })}
                 </div> : null}
+
+
+            <hr />
+
+          { this.state.onlineButton? <button className='btn btn-info' onClick={()=>{
+            this.makeOnline(this.auxilary.board,this.auxilary.rowPrice)
+          }}>Make my theatre online</button>:null}
 
         </div>);
 
