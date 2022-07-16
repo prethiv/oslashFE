@@ -1,6 +1,7 @@
 import React from 'react';
+import axios from 'axios';
 
-export default class Home extends React.Component {
+export default class Admin extends React.Component {
 
     constructor(props) {
         super(props);
@@ -139,6 +140,17 @@ export default class Home extends React.Component {
     makeOnline(board,pricing){
         console.log(board);
         console.log(pricing);
+        let theatreinfo={
+            name:this.state.theatrename,
+            seating:board,
+            pricing:pricing    
+        };
+        console.log(theatreinfo)
+        axios.post("http://localhost:3001/makeTheatreOnline",theatreinfo).then(data=>{
+            console.log("Axios Response ",data);
+        }).catch(err=>{
+            console.error("Axios Error ",err)
+        })
     }
 
     render() {
@@ -151,7 +163,9 @@ export default class Home extends React.Component {
 
                 this.setState({ layout: event.target.value })
             }} />
-            <input type="text" placeholder='Theatrename' />
+            <input type="text" placeholder='Theatrename' onChange={(event)=>{
+                this.setState({theatrename:event.target.value})
+            }} />
             <button onClick={this.generateLayout}>Generate Layout</button>
 
             {this.state.board.map((item, index) => {
